@@ -1,19 +1,21 @@
 #desert background from: https://opengameart.org/content/cethiels-desert-background-redux
 # cactus also from https://opengameart.org
-
+from random import randint
 
 
 class Director():
-    def __init__(self, keyboard_service, video_service, cactus, background):
+    def __init__(self, keyboard_service, video_service, cactus_1, cactus_2, background):
         self._keyboard_service = keyboard_service
         self._video_service = video_service
-        self._cactus = cactus
+        self._cactus_1 = cactus_1
+        self._cactus_2 = cactus_2
         self._background = background
 
     def start_game(self):
         self._video_service.open_window() 
         self._background.load_texture()  
-        self._cactus.load_texture()
+        self._cactus_1.load_texture()
+        self._cactus_2.load_texture()
 
         while self._video_service.is_window_open(): 
             self._get_inputs()
@@ -25,11 +27,28 @@ class Director():
         pass
 
     def _do_updates(self):
-        pass
+        self._cactus_1.move_cactus()
+        self._cactus_1.reset_cactus()
+        self._cactus_2.move_cactus()
+        self._cactus_2.reset_cactus()
+        #self.ck_cactus_overlap()
+        
 
     def _do_outputs(self):
         self._video_service.clear_buffer()
         self._background.draw_self()
-        self._cactus.draw_self()
+        self._cactus_1.draw_self()
+        self._cactus_2.draw_self()
         self._video_service.flush_buffer()
 
+    
+    #not working for some reason:
+    def ck_cactus_overlap(self):
+        
+        if (self._cactus_2._pos_x - self._cactus_1._pos_x) <= 50:
+            self._cactus_2._pos_x = randint(818, 1800)
+            #return self._cactus_2._pos_x
+        
+        elif (self._cactus_2._pos_x - self._cactus_1._pos_x) <= -50:
+            self._cactus_2._pos_x = randint(818, 1800)
+            #return self._cactus_2._pos_x

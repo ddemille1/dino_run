@@ -1,5 +1,6 @@
 
 import os
+from random import randint
 from actors.background import Background
 from actors.cactus import Cactus
 from director import Director
@@ -18,13 +19,16 @@ def main():
     #create background
     background = Background(BACKGROUND, 0, 0)
 
-    #create cactus
-    cactus = Cactus(CACTUS, 700, 500)
+    #create cacti
+    cactus_1 = Cactus(CACTUS, randint(818, 1800), 500)
+    #cactus_2 = Cactus(CACTUS, 715, 500)
+    cactus_2 = Cactus(CACTUS, randint(818, 1800), 500)
+
 
     # start game
     keyboard_service = KeyboardService()
     video_service = VideoService(CAPTION, SCREEN_WIDTH, SCREEN_HEIGHT, FRAME_RATE)
-    director = Director(keyboard_service, video_service, cactus, background)
+    director = Director(keyboard_service, video_service, cactus_1, cactus_2, background)
     director.start_game()
 
 
