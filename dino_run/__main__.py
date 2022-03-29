@@ -3,6 +3,7 @@ import os
 from random import randint
 from actors.background import Background
 from actors.cactus import Cactus
+from actors.dinosaur import Dinosaur
 from director import Director
 from services.keyboard_service import KeyboardService
 from services.video_service import VideoService
@@ -14,16 +15,23 @@ FRAME_RATE = 60
 CAPTION = 'Dino Run!'
 BACKGROUND = os.path.dirname(os.path.abspath(__file__)) + "/resources\pictures\cethiel-desert-edit.png"
 CACTUS = os.path.dirname(os.path.abspath(__file__)) + '/resources\pictures\small_cactus.png'
+PLAYER = os.path.dirname(os.path.abspath(__file__)) + '/resources\pictures\cat_run.png'
 
 def main():
     #create background
     background = Background(BACKGROUND, 0, 0)
+    print ("Background loaded")
 
     #create cacti
     cactus_1 = Cactus(CACTUS, randint(818, 1800), 500)
+    print ("Cactus 1 loaded")
     #cactus_2 = Cactus(CACTUS, 715, 500)
     cactus_2 = Cactus(CACTUS, randint(818, 1800), 500)
+    print ("Cactus 2 loaded")
 
+    # Create Player
+    player = Dinosaur(PLAYER)
+    print ("Player loaded")
 
     # start game
     keyboard_service = KeyboardService()

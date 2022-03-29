@@ -1,7 +1,7 @@
 #desert background from: https://opengameart.org/content/cethiels-desert-background-redux
 # cactus also from https://opengameart.org
+import pyray
 from random import randint
-
 
 class Director():
     def __init__(self, keyboard_service, video_service, cactus_1, cactus_2, background):
@@ -10,6 +10,7 @@ class Director():
         self._cactus_1 = cactus_1
         self._cactus_2 = cactus_2
         self._background = background
+        # self._player = player
 
     def start_game(self):
         self._video_service.open_window() 
