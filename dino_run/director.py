@@ -3,6 +3,7 @@
 import pyray
 from random import randint
 
+
 class Director():
     def __init__(self, keyboard_service, video_service, cactus_1, cactus_2, player, background):
         self._keyboard_service = keyboard_service
@@ -20,21 +21,18 @@ class Director():
         self._player.load_texture()
 
         while self._video_service.is_window_open(): 
-            self._get_inputs()
             self._do_updates()
             self._do_outputs()
         self._video_service.close_window()    
-
-    def _get_inputs(self):
-        pass
 
     def _do_updates(self):
         self._cactus_1.move_cactus()
         self._cactus_1.reset_cactus()
         self._cactus_2.move_cactus()
         self._cactus_2.reset_cactus()
+        self._player.move_player()
         self.ck_cactus_overlap()
-        
+        self.ck_collision()
 
     def _do_outputs(self):
         self._video_service.clear_buffer()
@@ -42,12 +40,13 @@ class Director():
         self._cactus_1.draw_self()
         self._cactus_2.draw_self()
         self._player.animate_player()
+        # self._player.draw_self()
         self._video_service.flush_buffer()
 
-    
-    
     def ck_cactus_overlap(self):
         # this ensures that the cacti aren't generated so close together that the player can't jump between them. 
-        if abs(self._cactus_2._pos_x - self._cactus_1._pos_x) <= 150:
+        if abs(self._cactus_2._pos_x - self._cactus_1._pos_x) <= 400:
             self._cactus_2._pos_x = randint(818, 1800)
-           
+
+    def ck_collision(self):
+        pass

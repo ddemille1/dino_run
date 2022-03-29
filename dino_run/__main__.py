@@ -3,7 +3,7 @@ import os
 from random import randint
 from actors.background import Background
 from actors.cactus import Cactus
-from actors.dinosaur import Dinosaur
+from actors.player import Player
 from director import Director
 from services.keyboard_service import KeyboardService
 from services.video_service import VideoService
@@ -27,7 +27,7 @@ def main():
     cactus_2 = Cactus(CACTUS, randint(818, 1800), 500)
 
     # Create Player
-    player = Dinosaur(PLAYER, 40, 440)
+    player = Player(PLAYER, 60, 440)
     print ("Player loaded")
 
     # start game
