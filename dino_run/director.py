@@ -32,7 +32,7 @@ class Director():
         self._cactus_1.reset_cactus()
         self._cactus_2.move_cactus()
         self._cactus_2.reset_cactus()
-        #self.ck_cactus_overlap()
+        self.ck_cactus_overlap()
         
 
     def _do_outputs(self):
@@ -43,13 +43,9 @@ class Director():
         self._video_service.flush_buffer()
 
     
-    #not working for some reason:
+    
     def ck_cactus_overlap(self):
-        
-        if (self._cactus_2._pos_x - self._cactus_1._pos_x) <= 50:
+        # this ensures that the cacti aren't generated so close together that the player can't jump between them. 
+        if abs(self._cactus_2._pos_x - self._cactus_1._pos_x) <= 150:
             self._cactus_2._pos_x = randint(818, 1800)
-            #return self._cactus_2._pos_x
-        
-        elif (self._cactus_2._pos_x - self._cactus_1._pos_x) <= -50:
-            self._cactus_2._pos_x = randint(818, 1800)
-            #return self._cactus_2._pos_x
+           
