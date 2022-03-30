@@ -4,19 +4,20 @@ import pyray
 from random import randint
 
 class Director():
-    def __init__(self, keyboard_service, video_service, cactus_1, cactus_2, background):
+    def __init__(self, keyboard_service, video_service, cactus_1, cactus_2, player, background):
         self._keyboard_service = keyboard_service
         self._video_service = video_service
         self._cactus_1 = cactus_1
         self._cactus_2 = cactus_2
         self._background = background
-        # self._player = player
+        self._player = player
 
     def start_game(self):
         self._video_service.open_window() 
         self._background.load_texture()  
         self._cactus_1.load_texture()
         self._cactus_2.load_texture()
+        self._player.load_texture()
 
         while self._video_service.is_window_open(): 
             self._get_inputs()
@@ -40,6 +41,7 @@ class Director():
         self._background.draw_self()
         self._cactus_1.draw_self()
         self._cactus_2.draw_self()
+        self._player.animate_player()
         self._video_service.flush_buffer()
 
     

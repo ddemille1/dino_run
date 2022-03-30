@@ -20,23 +20,20 @@ PLAYER = os.path.dirname(os.path.abspath(__file__)) + '/resources\pictures\cat_r
 def main():
     #create background
     background = Background(BACKGROUND, 0, 0)
-    print ("Background loaded")
 
     #create cacti
     cactus_1 = Cactus(CACTUS, randint(818, 1800), 500)
-    print ("Cactus 1 loaded")
     #cactus_2 = Cactus(CACTUS, 715, 500)
     cactus_2 = Cactus(CACTUS, randint(818, 1800), 500)
-    print ("Cactus 2 loaded")
 
     # Create Player
-    player = Dinosaur(PLAYER)
+    player = Dinosaur(PLAYER, 40, 440)
     print ("Player loaded")
 
     # start game
     keyboard_service = KeyboardService()
     video_service = VideoService(CAPTION, SCREEN_WIDTH, SCREEN_HEIGHT, FRAME_RATE)
-    director = Director(keyboard_service, video_service, cactus_1, cactus_2, background)
+    director = Director(keyboard_service, video_service, cactus_1, cactus_2, player, background)
     director.start_game()
 
 

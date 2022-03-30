@@ -14,20 +14,6 @@ class AnimationInfo:
 
 class Dinosaur(Background):
     """ Create a new player running """
-    def __init__(self, texture_path):
-
-        self._texture =  pyray.load_texture(texture_path)
-
-        self._animation_values = {}
-        self._animation_values[(FORWARD, WALK)] = AnimationInfo(3, (195,163), (0,0))
-        
-        self._timer = 0
-        self._frame = 0
-        self._player_direction = FORWARD
-        self._player_action = WALK
-
-        self._position = (40, 150)
-
     def set_direction(self, direction):
         self._player_direction = direction
 
@@ -38,6 +24,16 @@ class Dinosaur(Background):
         self._position = position
 
     def draw(self, frame_time):
+        # self._texture =  pyray.load_texture(self._texture)
+
+        self._animation_values = {}
+        self._animation_values[(FORWARD, WALK)] = AnimationInfo(3, (195,163), (0,0))
+        
+        self._timer = 0
+        self._frame = 0
+        self._player_direction = FORWARD
+        self._player_action = WALK
+
         self._timer += frame_time
         animation_values = self._animation_values[(self._player_direction, self._player_action)]
         if (self._timer >= 0.1): 
@@ -52,10 +48,10 @@ class Dinosaur(Background):
                 self._texture,
                 pyray.Rectangle(o[0] + self._frame * s[0], o[1], 
                              s[0], s[1]),
-                pyray.Vector2(self._position[0], self._position[1]),
+                pyray.Vector2(self._pos_x, self._pos_y),
                 pyray.RAYWHITE
             )
 
-    def draw_animation(self):
+    def animate_player(self):
         frame_time = pyray.get_frame_time()
         self.draw(frame_time)
