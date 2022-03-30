@@ -20,7 +20,7 @@ class Player(Background):
         Background.__init__(self, file_path, pos_x, pos_y)
         self._keyboard_service = KeyboardService()
         self._ground = pos_y
-        self._animation_values = {(FORWARD, WALK): AnimationInfo(3, (195, 163), (0, 0))}
+        self._animation_values = {(FORWARD, WALK): AnimationInfo(3, (114, 95), (0, 0))}
         self._timer = 0
         self._frame = 0
         self._player_direction = FORWARD

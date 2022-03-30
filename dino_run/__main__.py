@@ -15,7 +15,7 @@ FRAME_RATE = 60
 CAPTION = 'Dino Run!'
 BACKGROUND = os.path.dirname(os.path.abspath(__file__)) + "/resources\pictures\cethiel-desert-edit.png"
 CACTUS = os.path.dirname(os.path.abspath(__file__)) + '/resources\pictures\small_cactus.png'
-PLAYER = os.path.dirname(os.path.abspath(__file__)) + '/resources\pictures\cat_run.png'
+PLAYER = os.path.dirname(os.path.abspath(__file__)) + '/resources\pictures\cat_resized.png'
 
 def main():
     #create background
@@ -27,7 +27,7 @@ def main():
     cactus_2 = Cactus(CACTUS, randint(818, 1800), 500)
 
     # Create Player
-    player = Player(PLAYER, 60, 440)
+    player = Player(PLAYER, 60, 500)
     print ("Player loaded")
 
     # start game
