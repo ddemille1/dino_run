@@ -1,8 +1,7 @@
 #desert background from: https://opengameart.org/content/cethiels-desert-background-redux
 # cactus also from https://opengameart.org
-import pyray
 from random import randint
-
+import pyray
 
 class Director():
     def __init__(self, keyboard_service, video_service, cactus_1, cactus_2, player, background):
@@ -12,6 +11,8 @@ class Director():
         self._cactus_2 = cactus_2
         self._background = background
         self._player = player
+
+        self._is_game_over = False
 
     def start_game(self):
         self._video_service.open_window() 
@@ -33,6 +34,7 @@ class Director():
         self._player.move_player()
         self.ck_cactus_overlap()
         self.ck_collision()
+        self.game_over()     
 
     def _do_outputs(self):
         self._video_service.clear_buffer()
@@ -40,7 +42,6 @@ class Director():
         self._cactus_1.draw_self()
         self._cactus_2.draw_self()
         self._player.animate_player()
-        # self._player.draw_self()
         self._video_service.flush_buffer()
 
     def ck_cactus_overlap(self):
@@ -49,4 +50,25 @@ class Director():
             self._cactus_2._pos_x = randint(818, 1800)
 
     def ck_collision(self):
-        pass
+        # This function reads the position values of the cactus and the player when they collide
+        cactus1_pos = abs(self._cactus_1._pos_x)
+        cactus2_pos = abs(self._cactus_2._pos_x)
+        player_pos = abs(self._player._pos_y)
+
+        # This section runs for every frame when the cactus collides with the player, it should stop once self._is_game_over is True
+        if (cactus1_pos >= 60 and cactus1_pos <= 107 and player_pos >= 415) or (cactus2_pos >= 60 and cactus2_pos <= 107 and player_pos >= 415 ):
+            self._is_game_over = True
+            # print ("Game Over!")
+            # print ("Cactus 1:" + str(self._cactus_1._pos_x) + "," + str(self._cactus_1._pos_y))
+            # print ("Cactus 2:" + str(self._cactus_2._pos_x) + "," + str(self._cactus_2._pos_y))
+            # print ("Player:" + str(self._player._pos_x) + "," + str(self._player._pos_y))
+
+    def game_over(self):
+        """Shows the 'game over' message and turns the cycles white if the game is over.
+        
+        Args:
+            cast (Cast): The cast of Actors in the game.
+        """
+        if self._is_game_over:
+            # Not working
+            pyray.draw_text("Game Over!", 190, 200, 20, pyray.LIGHTGRAY)

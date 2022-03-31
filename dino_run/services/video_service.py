@@ -26,5 +26,3 @@ class VideoService():
     def open_window(self):
         pyray.init_window(self._screen_width, self._screen_height, self._caption)    
         pyray.set_target_fps(self._frame_rate)
-
-
