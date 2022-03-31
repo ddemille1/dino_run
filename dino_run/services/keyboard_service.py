@@ -6,15 +6,16 @@ class KeyboardService:
     a point representing a direction.
 
     Attributes:
-        cell_size (int): For scaling directional input to a grid.
+        _dx (int): the x position
+        _v (int): velocity of jump.
+        _m (int): mass of player
+        _jump (Bool): True if jumpint
+        _initial_jump_velocity (int): initial velocity of the player's jump
     """
 
     def __init__(self):
-        """Constructs a new KeyboardService using the specified cell size.
+        """Constructs a new KeyboardService using the given attributes."""
 
-        Args:
-            cell_size (int): The size of a cell in the display grid.
-        """
         self._dx = 0
         # v = velocity
         self._v = 0
@@ -47,4 +48,6 @@ class KeyboardService:
         return force
 
     def clear_jump(self):
+        """Returns the bool: False for when the player is not jumping. """
+        
         self._jump = False

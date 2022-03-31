@@ -8,7 +8,30 @@ import time
 
 
 class Director():
+    """A person who directs the game. 
+    
+    The responsibility of a Director is to control the sequence of play.
+
+    Attributes:
+        _keyboard_service (KeyboardService): For getting directional input.
+        _video_service (VideoService): For providing video output.
+        _cactus_1 (Cactus): For generating the first cactus.
+        _cactus_2 (Cactus): For generating the second cactus.
+        _background (Background): For generating the background.
+        _player (Player): For generating the player.
+        _is_game_over(bool): For tracking if the game is running.
+    """
     def __init__(self, keyboard_service, video_service, cactus_1, cactus_2, player, background):
+        """Constructs a new Director using the specified keyboard service, video service, cacti, player, and background.
+        
+        Args:
+            keyboard_service (KeyboardService): An instance of KeyboardService.
+            video_service (VideoService): An instance of VideoService.
+            cactus_1 (Cactus): An instance of Cactus.
+            cactus_2 (Cactus): An instance of Cactus.
+            player (Player): An instance of Player.
+            background (Background): An instance of Background.
+        """
         self._keyboard_service = keyboard_service
         self._video_service = video_service
         self._cactus_1 = cactus_1
@@ -19,6 +42,8 @@ class Director():
         # self._clock = pygame.time.Clock()
 
     def start_game(self):
+        """Starts the game by using the main game loop."""
+        
         self._video_service.open_window() 
         self._background.load_texture()  
         self._cactus_1.load_texture()
@@ -34,6 +59,8 @@ class Director():
         self._video_service.close_window()    
 
     def _do_updates(self):
+        """Updates the cacti and player's position. Resolves any overlap between cacti. Handles collisions between player and cacti. Ends game."""
+
         self._cactus_1.move_cactus()
         self._cactus_1.reset_cactus()
         self._cactus_2.move_cactus()
@@ -44,6 +71,8 @@ class Director():
         self.game_over()     
 
     def _do_outputs(self):
+        """Starts drawing. Draws background, cacti, player, ends drawing."""
+
         self._video_service.clear_buffer()
         self._background.draw_self()
         self._cactus_1.draw_self()
@@ -52,12 +81,15 @@ class Director():
         self._video_service.flush_buffer()
 
     def ck_cactus_overlap(self):
-        # this ensures that the cacti aren't generated so close together that the player can't jump between them. 
+        """this ensures that the cacti aren't generated so close together that the player can't jump between them."""
+
         if abs(self._cactus_2._pos_x - self._cactus_1._pos_x) <= 400:
             self._cactus_2._pos_x = randint(818, 1800)
 
     def ck_collision(self):
-        # This function reads the position values of the cactus and the player when they collide
+        """This function checks for collisions between the cacti and player. If they collide it sets is_game_over to True."""
+
+        #This section reads the position values of the cactus and the player when they collide
         cactus1_pos = abs(self._cactus_1._pos_x)
         cactus2_pos = abs(self._cactus_2._pos_x)
         player_pos = abs(self._player._pos_y)
@@ -71,11 +103,8 @@ class Director():
             # print ("Player:" + str(self._player._pos_x) + "," + str(self._player._pos_y))
 
     def game_over(self):
-        """Shows the 'game over' message and turns the cycles white if the game is over.
-        
-        Args:
-            cast (Cast): The cast of Actors in the game.
-        """
+        """Shows the 'game over' message if the game is over."""
+
         if self._is_game_over:
             # Not working
             # milli = self._clock.tic()
