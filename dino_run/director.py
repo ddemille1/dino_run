@@ -2,6 +2,10 @@
 # cactus also from https://opengameart.org
 from random import randint
 import pyray
+import time
+# import pygame
+# from pygame.locals import *
+
 
 class Director():
     def __init__(self, keyboard_service, video_service, cactus_1, cactus_2, player, background):
@@ -11,8 +15,8 @@ class Director():
         self._cactus_2 = cactus_2
         self._background = background
         self._player = player
-
         self._is_game_over = False
+        # self._clock = pygame.time.Clock()
 
     def start_game(self):
         self._video_service.open_window() 
@@ -20,10 +24,13 @@ class Director():
         self._cactus_1.load_texture()
         self._cactus_2.load_texture()
         self._player.load_texture()
+        # self._clock.tic()
 
-        while self._video_service.is_window_open(): 
+        while self._video_service.is_window_open() and not self._is_game_over:
             self._do_updates()
             self._do_outputs()
+        self.game_over()
+        time.sleep(5)
         self._video_service.close_window()    
 
     def _do_updates(self):
@@ -71,4 +78,8 @@ class Director():
         """
         if self._is_game_over:
             # Not working
-            pyray.draw_text("Game Over!", 190, 200, 20, pyray.LIGHTGRAY)
+            # milli = self._clock.tic()
+            # sec = milli / 1000
+            pyray.draw_text("Game Over!", 20, 20, 140, pyray.VIOLET)
+            # pyray.draw_text(f"{sec}", 20, 180, 100, pyray.VIOLET)
+            pyray.end_drawing()
