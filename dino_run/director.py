@@ -17,12 +17,13 @@ class Director():
         _video_service (VideoService): For providing video output.
         _cactus_1 (Cactus): For generating the first cactus.
         _cactus_2 (Cactus): For generating the second cactus.
-        _background (Background): For generating the background.
         _player (Player): For generating the player.
+        _background (Background): For generating the background.
+        _timer(Timer): For generating the timer
         _is_game_over(bool): For tracking if the game is running.
     """
-    def __init__(self, keyboard_service, video_service, cactus_1, cactus_2, player, background):
-        """Constructs a new Director using the specified keyboard service, video service, cacti, player, and background.
+    def __init__(self, keyboard_service, video_service, cactus_1, cactus_2, player, background, timer):
+        """Constructs a new Director using the specified keyboard service, video service, cacti, player, background, and timer.
         
         Args:
             keyboard_service (KeyboardService): An instance of KeyboardService.
@@ -31,15 +32,17 @@ class Director():
             cactus_2 (Cactus): An instance of Cactus.
             player (Player): An instance of Player.
             background (Background): An instance of Background.
+            timer(Timer): An instance of Timer
         """
         self._keyboard_service = keyboard_service
         self._video_service = video_service
         self._cactus_1 = cactus_1
         self._cactus_2 = cactus_2
-        self._background = background
         self._player = player
+        self._background = background
+        self._timer = timer
         self._is_game_over = False
-        # self._clock = pygame.time.Clock()
+        
 
     def start_game(self):
         """Starts the game by using the main game loop."""
@@ -49,7 +52,6 @@ class Director():
         self._cactus_1.load_texture()
         self._cactus_2.load_texture()
         self._player.load_texture()
-        # self._clock.tic()
 
         while self._video_service.is_window_open() and not self._is_game_over:
             self._do_updates()
@@ -59,8 +61,9 @@ class Director():
         self._video_service.close_window()    
 
     def _do_updates(self):
-        """Updates the cacti and player's position. Resolves any overlap between cacti. Handles collisions between player and cacti. Ends game."""
+        """Updates the time elapsed since window opened. Updates the cacti and player's position. Resolves any overlap between cacti. Handles collisions between player and cacti. Ends game."""
 
+        self._timer.get_frame_time()
         self._cactus_1.move_cactus()
         self._cactus_1.reset_cactus()
         self._cactus_2.move_cactus()
@@ -69,15 +72,17 @@ class Director():
         self.ck_cactus_overlap()
         self.ck_collision()
         self.game_over()     
+        
 
     def _do_outputs(self):
-        """Starts drawing. Draws background, cacti, player, ends drawing."""
+        """Starts drawing. Draws background, cacti, player, timer, then ends drawing."""
 
         self._video_service.clear_buffer()
         self._background.draw_self()
         self._cactus_1.draw_self()
         self._cactus_2.draw_self()
         self._player.animate_player()
+        self._timer.draw_timer()
         self._video_service.flush_buffer()
 
     def ck_cactus_overlap(self):
@@ -112,3 +117,5 @@ class Director():
             pyray.draw_text("Game Over!", 20, 20, 140, pyray.VIOLET)
             # pyray.draw_text(f"{sec}", 20, 180, 100, pyray.VIOLET)
             pyray.end_drawing()
+
+    
